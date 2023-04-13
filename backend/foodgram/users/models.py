@@ -45,4 +45,37 @@ class User(AbstractUser):
         return self.username
 
 
+class Follow(models.Model):
+    """Модель подписок."""
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='follower',
+        verbose_name='Подписчик'
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='follows',
+        verbose_name='Автор рецепта'
+    )
 
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+        constraints = (
+            models.UniqueConstraint(
+                fields=('user', 'author'),
+                name='unique_subscription',
+            ),
+            models.CheckConstraint(
+                name='%(app_label)s_%(class)s_prevent_self_follow',
+                check=~models.Q(author=models.F('user'))
+            )
+        )
+
+    def __str__(self):
+        return f'{self.user} подписан на {self.author}.'
+
+# https://adamj.eu/tech/2021/02/26/django-check-constraints-prevent-self-following/
+# TODO разобраться с F, Q выражениями
