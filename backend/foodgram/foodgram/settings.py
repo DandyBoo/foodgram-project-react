@@ -35,7 +35,7 @@ DEBUG = True
 if ENABLE_PROD:
     DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
