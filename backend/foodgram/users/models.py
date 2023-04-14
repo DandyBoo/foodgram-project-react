@@ -78,4 +78,4 @@ class Follow(models.Model):
         return f'{self.user} подписан на {self.author}.'
 
 # https://adamj.eu/tech/2021/02/26/django-check-constraints-prevent-self-following/
-# TODO разобраться с F, Q выражениями
+# TODO разобраться подробнее с F, Q выражениями
