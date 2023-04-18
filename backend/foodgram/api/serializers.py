@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from users.models import User
+from users.models import User, Follow
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,8 +13,13 @@ class UserSerializer(serializers.ModelSerializer):
             'last_name', 'is_subscribed'
         )
 
-    def get_is_subscribed(self, obj):
+    def get_is_subscribed(self, obj: User):
         request = self.context.get('request')
-        if request.user.is_anonymous:
+        if not request or request.user.is_anonymous:
             return False
-        return obj.following.filter(user=request.user).exists()
+        return Follow.objects.filter(
+            user=request.user, author=obj).exists()
+
+
+class SubsctiptionListSerializer(UserSerializer):
+    pass
