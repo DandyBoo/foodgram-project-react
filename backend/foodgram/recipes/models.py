@@ -104,7 +104,7 @@ class Recipe(models.Model):
 
 
 class IngredientRecipe(models.Model):
-    """Промежуточная модель m2m-связи ингредиентов и рецептов."""
+    """Промежуточная модель связи ингредиентов и рецептов."""
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
@@ -138,6 +138,7 @@ class IngredientRecipe(models.Model):
 
 
 class Favorite(models.Model):
+    """"Модель избранного."""
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
