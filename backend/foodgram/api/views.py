@@ -4,9 +4,12 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
+from .filters import IngredientSearchFilter
+from recipes.models import Tag, Ingredient
 from .pagination import CustomPagination
-from .serializers import UserSerializer, SubsctiptionListSerializer
+from .serializers import UserSerializer, SubsctiptionListSerializer, TagSerializer, IngredientSerializer
 from users.models import User, Follow
 
 
@@ -46,3 +49,16 @@ class CustomUserViewSet(UserViewSet):
             pages, many=True, context={"request": request}
         )
         return self.get_paginated_response(serializer.data)
+
+
+class TagViewSet(ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+
+class IngredientViewSet(ModelViewSet):
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
+    filter_backends = (IngredientSearchFilter,)
+    search_fields = ('^name',)
+

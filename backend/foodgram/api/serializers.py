@@ -1,9 +1,12 @@
 from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
+from recipes.models import Tag, Ingredient
 from users.models import User, Follow
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """Сериализатор пользователей."""
     is_subscribed = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -21,5 +24,31 @@ class UserSerializer(serializers.ModelSerializer):
             user=request.user, author=obj).exists()
 
 
+class TagSerializer(ModelSerializer):
+    """Сериализатор тегов."""
+    class Meta:
+        model = Tag
+        fields = (
+            'id',
+            'name',
+            'color',
+            'slug',
+        )
+
+
+class IngredientSerializer(ModelSerializer):
+    """Сериализатор ингридиентов."""
+    class Meta:
+        model = Ingredient
+        fields = (
+            'id',
+            'name',
+            'measurement_unit'
+        )
+
+
+# ....
+
 class SubsctiptionListSerializer(UserSerializer):
+    """Сериализатор подписок."""
     pass
