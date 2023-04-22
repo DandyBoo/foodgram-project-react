@@ -23,8 +23,6 @@ from .services import create_pdf
 
 
 class UserViewSet(DjoserUserViewSet):
-    # queryset = User.objects.all()
-    # serializer_class = UserSerializer
     pagination_class = CustomPagination
 
     @action(
