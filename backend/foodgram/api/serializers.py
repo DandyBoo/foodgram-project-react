@@ -19,7 +19,8 @@ class UserSerializer(DjoserUserSerializer):
     class Meta:
         model = User
         fields = (
-            'email', 'id', 'username', 'first_name', 'last_name', 'is_subscribed'
+            'email', 'id', 'username', 'first_name',
+            'last_name', 'is_subscribed'
         )
 
     def get_is_subscribed(self, obj: User):
@@ -34,23 +35,14 @@ class TagSerializer(ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = (
-            'id',
-            'name',
-            'color',
-            'slug',
-        )
+        fields = ('id', 'name', 'color', 'slug')
 
 
 class IngredientSerializer(ModelSerializer):
 
     class Meta:
         model = Ingredient
-        fields = (
-            'id',
-            'name',
-            'measurement_unit'
-        )
+        fields = ('id', 'name', 'measurement_unit')
 
 
 class IngredientRecipeSerializer(ModelSerializer):
@@ -71,12 +63,7 @@ class IngredientRecipeSerializer(ModelSerializer):
 
     class Meta:
         model = IngredientRecipe
-        fields = (
-            'id',
-            'name',
-            'measurement_unit',
-            'amount',
-        )
+        fields = ('id', 'name', 'measurement_unit', 'amount',)
 
 
 class RecipeSerializer(ModelSerializer):
@@ -121,10 +108,7 @@ class CreateIngredientRecipeSerializer(ModelSerializer):
 
     class Meta:
         model = IngredientRecipe
-        fields = (
-            'id',
-            'amount',
-        )
+        fields = ('id', 'amount')
 
     def create(self, validated_data):
         return IngredientRecipe.objects.create(
@@ -144,7 +128,7 @@ class CreateRecipeSerializer(ModelSerializer):
         model = Recipe
         fields = (
             'id', 'image', 'tags', 'author', 'ingredients',
-            'name', 'text', 'cooking_time',
+            'name', 'text', 'cooking_time'
         )
 
     def validate(self, data):

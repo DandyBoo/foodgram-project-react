@@ -100,7 +100,7 @@ class RecipeViewSet(ModelViewSet, CreateAndDeleteRelatedMixin):
         return self._delete_related(
             request=request, pk=pk, model=Cart)
 
-    @action(detail=False, methods=['GET'])
+    @action(methods=['GET'], detail=False)
     def download_shopping_cart(self, request):
         recipes_in_cart = Cart.objects.filter(user=request.user)
         ingredients = IngredientRecipe.objects.filter(
