@@ -5,7 +5,9 @@ from django.db import models
 
 class User(AbstractUser):
     """Кастомизированная модель пользователя."""
-    username_validator = UnicodeUsernameValidator()  # TODO подумать насчет переопределения (^[\w.@+-]+\z)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ('first_name', 'last_name', 'username')
+    username_validator = UnicodeUsernameValidator()
     username = models.CharField(
         max_length=150,
         unique=True,
@@ -76,6 +78,3 @@ class Follow(models.Model):
 
     def __str__(self):
         return f'{self.user} подписан на {self.author}.'
-
-# https://adamj.eu/tech/2021/02/26/django-check-constraints-prevent-self-following/
-# TODO разобраться подробнее с F, Q выражениями
