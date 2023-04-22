@@ -36,12 +36,12 @@ class UserViewSet(DjoserUserViewSet):
 
         if request.method == 'POST':
             serializer = serializers.FollowSerializer(
-                author, data=request.data, context={"request": request}
+                author, data=request.data, context={'request': request}
             )
             serializer.is_valid(raise_exception=True)
             Follow.objects.create(user=user, author=author)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        elif request.method == "DELETE":
+        elif request.method == 'DELETE':
             get_object_or_404(
                 Follow, user=user, author=author
             ).delete()
@@ -59,7 +59,7 @@ class UserViewSet(DjoserUserViewSet):
         queryset = User.objects.filter(following__user=user)
         pages = self.paginate_queryset(queryset)
         serializer = serializers.FollowListSerializer(
-            pages, many=True, context={"request": request}
+            pages, many=True, context={'request': request}
         )
         return self.get_paginated_response(serializer.data)
 
@@ -100,14 +100,14 @@ class RecipeViewSet(ModelViewSet, CreateAndDeleteRelatedMixin):
         return self._delete_related(
             request=request, pk=pk, model=Cart)
 
-    @action(detail=False, methods=["GET"])
+    @action(detail=False, methods=['GET'])
     def download_shopping_cart(self, request):
         recipes_in_cart = Cart.objects.filter(user=request.user)
         ingredients = IngredientRecipe.objects.filter(
-            recipe__in=Subquery(recipes_in_cart.values("pk"))
-        ).order_by("ingredient__name").values(
-            "ingredient__name", "ingredient__measurement_unit"
-        ).annotate(amount=Sum("amount"))
+            recipe__in=Subquery(recipes_in_cart.values('pk'))
+        ).order_by('ingredient__name').values(
+            'ingredient__name', 'ingredient__measurement_unit'
+        ).annotate(amount=Sum('amount'))
         return FileResponse(
             create_pdf(ingredients),
             as_attachment=True,
