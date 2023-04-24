@@ -1,10 +1,9 @@
 from django.contrib import admin
-from django.contrib.admin import TabularInline
 
 from .models import Cart, Favorite, Ingredient, IngredientRecipe, Recipe, Tag
 
 
-class IngredientInline(TabularInline):
+class IngredientInline(admin.TabularInline):
     """Вспомогательный класс для отображения ингредиентов в модели рецептов."""
     model = IngredientRecipe
     min_num = 1
