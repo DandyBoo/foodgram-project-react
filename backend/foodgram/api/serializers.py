@@ -132,15 +132,31 @@ class CreateRecipeSerializer(ModelSerializer):
         )
 
     def validate(self, data):
-        ingredients = self.initial_data.get('ingredients')
-        ingredients_list = []
+        ingredients = data.get('ingredients')
+        tags = data.get('tags')
+        cooking_time = data.get('cooking_time')
+
+        if not ingredients:
+            raise ValidationError('Ингредиенты не переданы!')
+
+        if not tags:
+            raise ValidationError('Тег не выбран!')
+
+        if cooking_time <= 0:
+            raise ValidationError('Время приготовления должно быть больше 0!')
+        #  полагаю это избыточно, т.к. в модели Recipe для cooking_time уже есть MinValueValidator
+
+        ingredients_set = set()
         for ingredient in ingredients:
             ingredient_id = ingredient['id']
-            if ingredient_id in ingredients_list:
-                raise ValidationError('Есть повторяющиеся ингредиенты!')
-            ingredients_list.append(ingredient_id)
-        if data['cooking_time'] <= 0:
-            raise ValidationError('Время приготовления должно быть больше 0!')
+            if ingredient_id in ingredients_set:
+                raise ValidationError('Ингредиенты не должны повторяться!')
+            ingredients_set.add(ingredient_id)
+
+            if ingredient['amount'] <= 0:
+                raise ValidationError('Количество ингредиента должно быть больше 0!')
+            #  полагаю это избыточно, т.к. в модели Ingredient для amount уже есть MinValueValidator
+
         return data
 
     @transaction.atomic
@@ -211,7 +227,7 @@ class FollowListSerializer(ModelSerializer):
         )
 
     def get_recipes_count(self, author):
-        return Recipe.objects.filter(author=author).count()
+        return author.recipes.count()
 
     def get_recipes(self, author):
         queryset = self.context.get('request')

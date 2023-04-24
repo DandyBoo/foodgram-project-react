@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MinValueValidator
 from django.db import models
 
 User = get_user_model()
@@ -32,7 +32,7 @@ class Tag(models.Model):
 
 
 class Ingredient(models.Model):
-    """Модель ингридиентов."""
+    """Модель ингредиентов."""
     name = models.CharField(
         max_length=200,
         db_index=True,
@@ -86,7 +86,6 @@ class Recipe(models.Model):
         verbose_name='Время приготовления, минут',
         validators=(
             MinValueValidator(1, 'Время приготовления не может быть меньше минуты'),
-            MaxValueValidator(1024, 'Время приготовления не может быть более 1024 минут')
         )
     )
     pub_date = models.DateTimeField(
@@ -118,7 +117,6 @@ class IngredientRecipe(models.Model):
     amount = models.IntegerField(
         validators=(
             MinValueValidator(1, 'Количество не может быть меньше 1'),
-            MaxValueValidator(1048576, 'Количество не может быть больше 1048576')
         ),
         verbose_name='Количество'
     )
@@ -131,8 +129,8 @@ class IngredientRecipe(models.Model):
                 name='unique_recipe'
             ),
         )
-        verbose_name = 'Ингридиент'
-        verbose_name_plural = 'Список ингридиентов'
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты в рецептах'
 
     def __str__(self):
         return f'В {self.recipe} входит {self.ingredient} в количестве {self.amount}'
@@ -148,6 +146,7 @@ class Favorite(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
+        related_name='in_favorite',
         verbose_name='Избранный рецепт'
     )
 

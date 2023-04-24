@@ -8,6 +8,7 @@ class UserAdmin(admin.ModelAdmin):
     """Административная панель пользователя."""
     list_display = ('id', 'username', 'email', 'first_name', 'last_name', 'is_superuser')
     list_filter = ('username', 'email')
+    search_fields = ('username', 'email')
 
 
 @admin.register(Follow)

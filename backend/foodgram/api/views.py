@@ -13,7 +13,6 @@ from rest_framework.viewsets import ModelViewSet
 from recipes.models import (Cart, Favorite, Ingredient, IngredientRecipe,
                             Recipe, Tag)
 from users.models import Follow, User
-
 from . import serializers
 from .filters import IngredientFilter, RecipeFilter
 from .mixins import CreateAndDeleteRelatedMixin
@@ -41,13 +40,12 @@ class UserViewSet(DjoserUserViewSet):
             serializer.is_valid(raise_exception=True)
             Follow.objects.create(user=user, author=author)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        elif request.method == 'DELETE':
+        if request.method == 'DELETE':
             get_object_or_404(
                 Follow, user=user, author=author
             ).delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            raise ValidationError('Неверный метод запроса.')
+        raise ValidationError('Неверный метод запроса.')
 
     @action(
         methods=['get'],
