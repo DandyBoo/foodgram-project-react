@@ -1,3 +1,6 @@
 name: foodgram_workflow
 
-on: [push]
+on:
+  push:
+    branches: [master]
+    
