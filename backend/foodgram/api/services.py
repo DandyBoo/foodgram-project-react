@@ -1,11 +1,10 @@
 import io
 from datetime import datetime
 
+from recipes.models import IngredientRecipe
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics, ttfonts
 from reportlab.pdfgen import canvas
-
-from recipes.models import IngredientRecipe
 
 
 def create_pdf(ingredients):
