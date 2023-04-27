@@ -2,8 +2,7 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404
 from djoser.serializers import UserSerializer as DjoserUserSerializer
 from drf_base64.fields import Base64ImageField
-
-from .services import create_ingredients
+from api.services import create_ingredients
 from recipes.models import (Cart, Favorite, Ingredient, IngredientRecipe,
                             Recipe, Tag)
 from rest_framework.exceptions import ValidationError
