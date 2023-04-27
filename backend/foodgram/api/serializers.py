@@ -144,7 +144,6 @@ class CreateRecipeSerializer(ModelSerializer):
 
         if cooking_time <= 0:
             raise ValidationError('Время приготовления должно быть больше 0!')
-        #  полагаю это избыточно, т.к. в модели Recipe для cooking_time уже есть MinValueValidator
 
         ingredients_set = set()
         for ingredient in ingredients:
@@ -154,8 +153,9 @@ class CreateRecipeSerializer(ModelSerializer):
             ingredients_set.add(ingredient_id)
 
             if ingredient['amount'] <= 0:
-                raise ValidationError('Количество ингредиента должно быть больше 0!')
-            #  полагаю это избыточно, т.к. в модели Ingredient для amount уже есть MinValueValidator
+                raise ValidationError(
+                    'Количество ингредиента должно быть больше 0!'
+                )
 
         return data
 

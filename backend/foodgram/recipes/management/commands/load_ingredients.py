@@ -13,7 +13,9 @@ class Command(BaseCommand):
             reader = csv.reader(file)
             try:
                 Ingredient.objects.bulk_create(
-                    Ingredient(name=item[0], measurement_unit=item[1]) for item in reader
+                    Ingredient(
+                        name=item[0],
+                        measurement_unit=item[1]) for item in reader
                 )
             except Exception as e:
                 return f'Возникла ошибка при импорте из csv-файла: {e}'

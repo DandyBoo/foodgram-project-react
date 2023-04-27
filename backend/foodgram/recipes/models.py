@@ -85,7 +85,9 @@ class Recipe(models.Model):
     cooking_time = models.PositiveSmallIntegerField(
         verbose_name='Время приготовления, минут',
         validators=(
-            MinValueValidator(1, 'Время приготовления не может быть меньше минуты'),
+            MinValueValidator(
+                1, 'Время приготовления не может быть меньше минуты'
+            ),
         )
     )
     pub_date = models.DateTimeField(
@@ -133,7 +135,10 @@ class IngredientRecipe(models.Model):
         verbose_name_plural = 'Ингредиенты в рецептах'
 
     def __str__(self):
-        return f'В {self.recipe} входит {self.ingredient} в количестве {self.amount}'
+        return (
+            f'В {self.recipe} входит {self.ingredient} '
+            f'в количестве {self.amount}'
+        )
 
 
 class Favorite(models.Model):

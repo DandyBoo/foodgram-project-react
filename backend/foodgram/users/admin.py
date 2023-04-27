@@ -6,7 +6,10 @@ from .models import Follow, User
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     """Административная панель пользователя."""
-    list_display = ('id', 'username', 'email', 'first_name', 'last_name', 'is_superuser')
+    list_display = (
+        'id', 'username', 'email', 'first_name',
+        'last_name', 'is_superuser'
+    )
     list_filter = ('username', 'email')
     search_fields = ('username', 'email')
 
