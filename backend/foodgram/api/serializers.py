@@ -8,9 +8,8 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.relations import PrimaryKeyRelatedField, SlugRelatedField
 from rest_framework.serializers import (IntegerField, ModelSerializer,
                                         SerializerMethodField)
-from users.models import Follow, User
-
 from api.services import create_ingredients
+from users.models import Follow, User
 
 
 class UserSerializer(DjoserUserSerializer):
