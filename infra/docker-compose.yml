@@ -3,7 +3,6 @@ services:
 
   db:
     image: postgres:13.0-alpine
-    platform: linux/x86_64
     volumes:
       - db_value:/var/lib/postgresql/data/
     env_file:
@@ -11,7 +10,6 @@ services:
 
   backend:
     image: dandyru/foodgram_backend:v1
-    platform: linux/x86_64
     restart: always
     volumes:
       - static_value:/app/static/
