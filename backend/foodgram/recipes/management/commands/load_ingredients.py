@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = 'Loads the ingredients to database from csv file'
 
     def handle(self, *args, **options):
-        with open('../../data/ingredients.csv', 'r', encoding='utf-8') as file:
+        with open('/data/ingredients.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             try:
                 Ingredient.objects.bulk_create(
