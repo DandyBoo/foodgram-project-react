@@ -50,7 +50,7 @@ class UserViewSet(DjoserUserViewSet):
 
     @action(
         methods=['get'],
-        detail=True,
+        detail=False,
         permission_classes=(IsAuthenticated,)
     )
     def subscriptions(self, request):
