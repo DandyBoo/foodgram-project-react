@@ -1,7 +1,7 @@
 
 
 ## Дипломный проект: Foodgram
-![workflow](https://github.com/DandyBoo/foodgram-project-react/actions/workflows/yamdb_workflow.yml/badge.svg)
+![workflow](https://github.com/DandyBoo/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
 
 Онлайн-сервис, на котором пользователи могут публиковать свои рецепты, добавлять чужие рецепты в избранное и подписываться на других авторов, а перед походом в магазин скачивать сводный список продуктов, необходимых для приготовления одного или нескольких выбранных блюд.
 
