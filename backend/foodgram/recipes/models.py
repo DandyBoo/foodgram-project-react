@@ -156,6 +156,7 @@ class Favorite(models.Model):
     )
 
     class Meta:
+        ordering = ('user',)
         default_related_name = 'favorites'
         verbose_name = 'Избранный рецепт'
         verbose_name_plural = 'Избранные рецепты'
@@ -166,11 +167,11 @@ class Favorite(models.Model):
             ),
         )
 
-    def __str__(self):
-        return (
-            f'Пользователь: {self.user}'
-            f'Избранные рецепты: {self.recipe}'
-        )
+    # def __str__(self):
+    #     return (
+    #         f'Пользователь: {self.user}'
+    #         f'Избранные рецепты: {self.recipe}'
+    #     )
 
 
 class Cart(models.Model):

@@ -225,9 +225,7 @@ class FavoriteSerializer(ModelSerializer):
             return False
         recipe = data['recipe']
         if Favorite.objects.filter(user=request.user, recipe=recipe).exists():
-            raise ValidationError({
-                'errors': 'Уже есть в избранном.'
-            })
+            raise ValidationError('Рецепт уже есть в избранном.')
         return data
 
     def to_representation(self, instance):
