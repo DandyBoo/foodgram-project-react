@@ -142,7 +142,7 @@ class CreateRecipeSerializer(ModelSerializer):
         if not tags:
             raise ValidationError('Тег не выбран!')
 
-        if cooking_time <= 0:
+        if int(cooking_time) <= 0:
             raise ValidationError('Время приготовления должно быть больше 0!')
 
         ingredients_set = set()
@@ -152,7 +152,7 @@ class CreateRecipeSerializer(ModelSerializer):
                 raise ValidationError('Ингредиенты не должны повторяться!')
             ingredients_set.add(ingredient_id)
 
-            if ingredient['amount'] <= 0:
+            if int(ingredient['amount']) <= 0:
                 raise ValidationError(
                     'Количество ингредиента должно быть больше 0!'
                 )
