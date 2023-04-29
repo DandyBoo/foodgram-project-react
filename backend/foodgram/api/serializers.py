@@ -214,6 +214,29 @@ class CartSerializer(ModelSerializer):
         return RecipeShortSerializer(instance.recipe, context=context).data
 
 
+class FavoriteSerializer(ModelSerializer):
+    class Meta:
+        model = Favorite
+        fields = ('user', 'recipe')
+
+    def validate(self, data):
+        request = self.context.get('request')
+        if not request or request.user.is_anonymous:
+            return False
+        recipe = data['recipe']
+        if Favorite.objects.filter(user=request.user, recipe=recipe).exists():
+            raise ValidationError({
+                'errors': 'Уже есть в избранном.'
+            })
+        return data
+
+    def to_representation(self, instance):
+        request = self.context.get('request')
+        context = {'request': request}
+        return RecipeShortSerializer(
+            instance.recipe, context=context).data
+
+
 class FollowListSerializer(ModelSerializer):
     recipes = SerializerMethodField()
     recipes_count = SerializerMethodField()

@@ -114,7 +114,7 @@ class RecipeViewSet(ModelViewSet, CreateAndDeleteRelatedMixin):
     @action(methods=['post'], detail=True)
     def favorite(self, request, pk):
         return self._create_related(
-            request=request, pk=pk, serializers=serializers.FollowSerializer)
+            request=request, pk=pk, serializers=serializers.FavoriteSerializer)
 
     @favorite.mapping.delete
     def delete_favorite(self, request, pk):
