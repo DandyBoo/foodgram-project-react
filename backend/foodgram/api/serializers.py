@@ -71,11 +71,11 @@ class RecipeSerializer(ModelSerializer):
     ingredients = IngredientRecipeSerializer(
         many=True,
         read_only=True,
-        source='ingredients_recipe',
+        source='recipes',
     )
     author = UserSerializer(read_only=True)
-    is_in_shopping_cart = SerializerMethodField(read_only=True)
     is_favorited = SerializerMethodField(read_only=True)
+    is_in_shopping_cart = SerializerMethodField(read_only=True)
 
     class Meta:
         model = Recipe
