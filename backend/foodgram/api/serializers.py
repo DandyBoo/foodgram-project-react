@@ -132,9 +132,9 @@ class CreateRecipeSerializer(ModelSerializer):
         )
 
     def validate(self, data):
-        ingredients = data.get('ingredients')
-        tags = data.get('tags')
-        cooking_time = data.get('cooking_time')
+        ingredients = self.initial_data.get('ingredients')
+        tags = self.initial_data.get('tags')
+        cooking_time = self.initial_data.get('cooking_time')
 
         if not ingredients:
             raise ValidationError('Ингредиенты не переданы!')
