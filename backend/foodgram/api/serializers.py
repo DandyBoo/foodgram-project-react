@@ -74,8 +74,8 @@ class RecipeSerializer(ModelSerializer):
         source='ingredients_recipe',
     )
     author = UserSerializer(read_only=True)
-    is_favorited = SerializerMethodField(read_only=True)
     is_in_shopping_cart = SerializerMethodField(read_only=True)
+    is_favorited = SerializerMethodField(read_only=True)
 
     class Meta:
         model = Recipe
