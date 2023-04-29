@@ -30,22 +30,24 @@ class UserViewSet(DjoserUserViewSet):
         permission_classes=(IsAuthenticated,)
     )
     def subscribe(self, request, id):
-        user = request.user
-        author = get_object_or_404(User, id=id)
-
-        if request.method == 'POST':
-            serializer = serializers.FollowSerializer(
-                author, data=request.data, context={'request': request}
+        if request.method != 'POST':
+            subscription = get_object_or_404(
+                Follow,
+                author=get_object_or_404(User, id=id),
+                user=request.user
             )
-            serializer.is_valid(raise_exception=True)
-            Follow.objects.create(user=user, author=author)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        if request.method == 'DELETE':
-            get_object_or_404(
-                Follow, user=user, author=author
-            ).delete()
+            self.perform_destroy(subscription)
             return Response(status=status.HTTP_204_NO_CONTENT)
-        raise ValidationError('Неверный метод запроса.')
+        serializer = serializers.FollowSerializer(
+            data={
+                'user': request.user.id,
+                'author': get_object_or_404(User, id=id).id
+            },
+            context={'request': request}
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     @action(
         methods=['get'],
