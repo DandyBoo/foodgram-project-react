@@ -34,7 +34,7 @@ class UserViewSet(DjoserUserViewSet):
         author = get_object_or_404(User, id=id)
 
         if request.method == 'POST':
-            serializer = serializers.FollowListSerializer(
+            serializer = serializers.FollowSerializer(
                 author, data=request.data, context={'request': request}
             )
             serializer.is_valid(raise_exception=True)
@@ -53,8 +53,7 @@ class UserViewSet(DjoserUserViewSet):
         permission_classes=(IsAuthenticated,)
     )
     def subscriptions(self, request):
-        user = request.user
-        queryset = User.objects.filter(following__user=user)
+        queryset = User.objects.filter(following__user=request.user)
         pages = self.paginate_queryset(queryset)
         serializer = serializers.FollowListSerializer(
             pages, many=True, context={'request': request}
