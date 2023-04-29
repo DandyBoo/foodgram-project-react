@@ -71,7 +71,7 @@ class RecipeSerializer(ModelSerializer):
     ingredients = IngredientRecipeSerializer(
         many=True,
         read_only=True,
-        source='ingridients_recipe',
+        source='ingredients_recipe',
     )
     author = UserSerializer(read_only=True)
     is_favorited = SerializerMethodField(read_only=True)
