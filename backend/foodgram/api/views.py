@@ -112,7 +112,7 @@ class RecipeViewSet(ModelViewSet, CreateAndDeleteRelatedMixin):
         return FileResponse(
             create_pdf(ingredients),
             as_attachment=True,
-            filename='shopping_cart.pdf')
+            filename='shopping_cart_2.pdf')
 
     @action(methods=['post'], detail=True)
     def favorite(self, request, pk):
